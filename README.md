@@ -1,87 +1,99 @@
 # 🧠 Flow Zint Studio - Intelligent AI Productivity Workspace
 
-Welcome to **Flow Zint Studio**, a premium, high-fidelity AI-powered unified productivity operating system and workspace dashboard. Built with a sleek glassmorphism aesthetic, modern micro-interactions, responsive grids, and low-latency interactive canvas animations, this project serves as a showcase for hackathons and a developer portfolio.
+Welcome to **Flow Zint Studio**, a premium, high-fidelity AI-powered unified productivity operating system and workspace dashboard. Built with a sleek glassmorphic design language, modern micro-interactions, responsive grids, and low-latency interactive canvas animations, this project serves as a showcase for hackathons and a developer portfolio.
+
+> **Official Submission Entry for the FlowZint AI Hackathon 2026**
+>
+> 🌐 **Live Demo Website**: [https://flowzint-studio.vercel.app](https://flowzint-studio.vercel.app)
+> 🐙 **GitHub Repository**: [https://github.com/MuthyalaVaraprasad/FlowZint-Studio](https://github.com/MuthyalaVaraprasad/FlowZint-Studio)
 
 ---
 
-## 🚀 Key Features & Dashboards
+## 👥 Hackathon Team Credentials: #JNTUH420
 
-Flow Zint Studio provides 10 core modules, each designed with 20+ features, and interactive workspaces to try them out:
-
-1. **AI Assistant**: A live chatbot featuring voice response (Web Speech Synthesis Text-to-Speech), preset prompt suggestions, custom agent personalities (Developer, Designer, Advisor), and context-switching tools.
-2. **Task Management**: A functional Kanban planner board with priority toggles, workload balancing metrics, and task movement across columns.
-3. **AI Document Hub**: Upload file parser with automated OCR summary generation, entity classifications, and a custom SVG Knowledge Node Graph.
-4. **AI Email Studio**: Adjusts email copy instantly depending on Selected Tones (Professional, Casual, Assertive, Friendly) with subject lines optimizer.
-5. **AI Meeting Assistant**: Transcript timeline stream, active speaker tags, emotion metrics, and an active canvas audio wave animator.
-6. **AI CRM**: Leads opportunities pipeline with custom conversion predictions and SVG funnels.
-7. **AI Workflow Builder**: Visual automation mapping trigger nodes. Run simulation triggers a sequential neon-glowing trail across the path.
-8. **Analytics Dashboard**: Dynamic metrics graphing using HSL-based SVGs, time filters, and a functional CSV data exporter.
-9. **Smart Notes**: Markdown notebook compiler with smart tags and Voice-to-Text dictation using the Web Speech Recognition API.
-10. **Automation Center**: Scheduled backup triggers, system event logs stream, and live CPU/RAM server resources monitors.
-
----
-
-## 🎨 Design & Aesthetics
-
-- **Glassmorphism**: Fully implemented using backdrop-filters, satin borders, and shadows.
-- **Aurora Background**: Pulsing radial gradients floating in the background.
-- **3D Plexus Canvas**: A custom canvas plexus network particle system that responds to cursor coordinates and spawns bursts of particles on clicks.
-- **Theme Toggle**: Real-time HSL variable updates toggling between Dark and Light mode.
-- **Developer Portfolio**: Muthyala Vara Prasad profile card with an interactive console terminal modal detailing bio, projects, skills, and certifications, featuring an interactive CLI shell.
+*   **Hackathon Event**: FlowZint AI Hackathon 2026
+*   **Team Name**: `#JNTUH420`
+*   **Teammates (4/4)**:
+    1.  **Muthyala Vara Prasad** (Team Leader) 👑
+        *   📞 Mobile: `+91 9963889086`
+    2.  **Bathula Varshith** ⚡
+        *   📞 Mobile: `+91 9182800206`
+    3.  **Gunja Ashok** 🛠️
+        *   📞 Mobile: `+91 9398872962`
+    4.  **Animindula Akhil** 🔍
+        *   📞 Mobile: `+91 8304840360`
 
 ---
 
-## 📁 Folder Structure
+## 🚀 Key Features & 12 Core Dashboards
+Flow Zint Studio implements **340+ features** distributed across 12 highly functional workspace dashboards:
 
-```
-Flow Zint Studio/
-├── dist/                  # Compiled production files
-├── src/
-│   ├── components/
-│   │   ├── modules/       # 10 core workspace sub-components
-│   │   │   ├── AIAssistant.tsx
-│   │   │   ├── TaskManager.tsx
-│   │   │   ├── DocumentHub.tsx
-│   │   │   ├── EmailStudio.tsx
-│   │   │   ├── MeetingAssistant.tsx
-│   │   │   ├── CRM.tsx
-│   │   │   ├── WorkflowBuilder.tsx
-│   │   │   ├── Analytics.tsx
-│   │   │   ├── SmartNotes.tsx
-│   │   │   └── AutomationCenter.tsx
-│   │   ├── Background3D.tsx
-│   │   ├── Preloader.tsx
-│   │   ├── SignIn.tsx
-│   │   ├── Dashboard.tsx
-│   │   ├── ModuleModal.tsx
-│   │   └── PortfolioModal.tsx
-│   ├── App.tsx            # Main state router
-│   ├── index.css          # Design system & HSL variables stylesheet
-│   └── main.tsx           # React mounting client
-├── index.html             # SEO header template
-├── package.json
-└── tsconfig.json
-```
+1.  **Overview Dashboard**: Real-time KPI stats cards, custom 3D plexus matrix system load monitor, diagnostic status terminal logs stream, and Synergy Output trend graphs.
+2.  **AI Assistant**: Custom chatbot + Multi-Agent Team Collaboration simulator (PO -> UI/UX -> DEV -> QA compiling code). Includes Web Speech TTS voice response synthesis (**45 features**).
+3.  **Task Management**: Kanban workflow planner board, dynamic task creator, Pomodoro Focus clock, and custom SVG Gantt timelines (**30 features**).
+4.  **AI Document Hub**: OCR file uploader, watermark generator overlay, digital signature applier, QR web-cam scanner simulator, and custom SVG Metadata Knowledge Graph nodes (**30 features**).
+5.  **AI Email Studio**: 4 Tone Rewriters (Professional, Casual, Assertive, Friendly) rewriting subjects/bodies, bulk campaign stats, and dynamic signature templates (**30 features**).
+6.  **AI Meeting Assistant**: Transcripts timeline, speaker tags, HTML5 Canvas audio wave animator synchronizing on canvas frames, and Spanish subtitle translator (**30 features**).
+7.  **AI CRM**: Lead prediction cards, opportunities pipeline tables, WhatsApp templates gateway dispatcher, custom conversion graphs, and client lifetime value metrics (**30 features**).
+8.  **AI Workflow Builder**: Node mapping flowcharts, visual node execution highlighter, and parallel thread branch spawners (**30 features**).
+9.  **Analytics Dashboard**: KPI time-series filters, SVG line graph charts, geographic demographic charts, and a functional CSV data downloader (**30 features**).
+10. **Smart Notes**: Markdown preview compiler, biometrics note lock toggles, SVG Backlinks mind map, and live Web Speech Voice-to-Text dictation (**30 features**).
+11. **Automation Center**: Rules manager, system logs terminal, active CPU/RAM resources graphs, Bash script exporter, and the **User Identity Config** dashboard panel (DisplayName text inputs and local picture base64 uploader) (**30 features**).
+12. **AI Design Studio**: Glassmorphism customizer CSS editor (sliders for blur, background-opacity, border-opacity, hue angle shadow, and border-radius), live preview box, 4 color presets, and live copy-ready CSS stylesheets (**45 features**).
 
 ---
 
-## 🛠️ Tech Stack & Setup
+## 🎨 Design, Aesthetics & Visual Excellence
+*   **3D Concentric Elliptical Orbit Preloader**: Loading screen renders 3D perspective rotated concentric orbit rings, 80 twinkling star particles drifting on canvas, and inter-node constellation links.
+*   **Google OAuth Sign-in Portal**: Simple glassmorphic portal displaying *only* the official Google Sign-In button container overlaid on a vertical Cyber Matrix grid light stream.
+*   **Glassmorphism Theme Toggle**: Real-time HSL variable updates toggling between Dark and Light mode.
+*   **High-Fidelity Responsiveness**: Grids automatically reflow between mobile (1 column), tablet (2 columns), and desktop (3 columns) using media queries defined in `index.css`.
 
-- **Core**: React 19, Vite, TypeScript
-- **Icons**: Lucide React
-- **Styling**: Vanilla CSS, Canvas API, Web Speech API
+---
 
-### Installation & Run
+## 🛠️ Technology Stack & Architectures
+*   **Core Framework**: React 19, TypeScript (TSX), Vite 8
+*   **Icons**: Lucide React
+*   **OAuth Security**: Google Identity Services (GSI) 2.0 with base64 JWT payload token decoding.
+*   **Audio/Speech API**: HTML5 Web Speech Recognition (Voice-to-Text) and Speech Synthesis (Text-to-Speech).
+*   **File Converter API**: Base64 FileReader API for user avatar uploads.
 
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-2. **Start Dev Server**:
-   ```bash
-   npm run dev
-   ```
-3. **Compile Production Bundle**:
-   ```bash
-   npm run build
-   ```
+---
+
+## 🚀 Installation & Local Development
+
+1.  **Clone the Repository**:
+    ```bash
+    git clone https://github.com/MuthyalaVaraprasad/FlowZint-Studio.git
+    cd FlowZint-Studio
+    ```
+2.  **Install Dependencies**:
+    ```bash
+    npm install
+    ```
+3.  **Run Development Server**:
+    ```bash
+    npm run dev
+    ```
+    *Starts the dev server on `http://localhost:5173`.*
+
+4.  **Verify Linter & Code Standards**:
+    ```bash
+    npm run lint
+    ```
+5.  **Compile Production Bundle**:
+    ```bash
+    npm run build
+    ```
+
+---
+
+## 🌐 Deployment to Vercel
+
+This project is configured out-of-the-box for seamless Vercel deployment:
+1.  Import your GitHub repository into [Vercel](https://vercel.com).
+2.  The framework settings will auto-detect Vite. Use:
+    *   **Build Command**: `npm run build`
+    *   **Output Directory**: `dist`
+3.  Vercel will use [vercel.json](./vercel.json) to configure SPA routing rules, preventing 404 errors on refreshes.
+4.  Once deployed, copy your live domain and add it to **Authorized JavaScript origins** in your Google Cloud Console Credentials page to enable live Google account authentication!
