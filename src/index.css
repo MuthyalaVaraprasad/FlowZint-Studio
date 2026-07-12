@@ -828,4 +828,11 @@ button, a, select, input, textarea, .cursor-pointer {
   color: #7c3aed !important;
 }
 
+/* Additional Tailwind Helper Mappings for Transparent & Borderless Inputs/Buttons */
+.bg-transparent { background-color: transparent !important; }
+.border-none { border: none !important; }
+.border-0 { border-width: 0 !important; }
+.outline-none { outline: none !important; }
+.cursor-pointer { cursor: pointer !important; }
+
 

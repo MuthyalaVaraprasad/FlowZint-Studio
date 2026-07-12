@@ -141,14 +141,14 @@ export const Analytics: React.FC = () => {
               <button 
                 type="button"
                 onClick={() => setTimeRange('7d')}
-                className={`px-2.5 py-0.5 rounded text-[10px] font-mono transition-all ${timeRange === '7d' ? 'bg-cyan-500/20 text-cyan-400' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-0.5 rounded text-[10px] font-mono transition-all border-0 outline-none cursor-pointer ${timeRange === '7d' ? 'bg-cyan-500/20 text-cyan-400' : 'bg-transparent text-slate-400 hover:text-white'}`}
               >
                 7 Days
               </button>
               <button 
                 type="button"
                 onClick={() => setTimeRange('30d')}
-                className={`px-2.5 py-0.5 rounded text-[10px] font-mono transition-all ${timeRange === '30d' ? 'bg-cyan-500/20 text-cyan-400' : 'text-slate-400 hover:text-white'}`}
+                className={`px-2.5 py-0.5 rounded text-[10px] font-mono transition-all border-0 outline-none cursor-pointer ${timeRange === '30d' ? 'bg-cyan-500/20 text-cyan-400' : 'bg-transparent text-slate-400 hover:text-white'}`}
               >
                 12 Months
               </button>
