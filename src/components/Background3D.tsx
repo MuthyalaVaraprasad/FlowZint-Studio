@@ -12,6 +12,9 @@ interface Particle {
   angle?: number;
   speed?: number;
   orbitRadius?: number;
+  orbitTilt?: number;
+  orbitRatio?: number;
+  isStar?: boolean;
   // Matrix Stream properties
   length?: number;
   color?: string;
@@ -52,20 +55,42 @@ export const Background3D: React.FC<Background3DProps> = ({ screen }) => {
       const h = canvas.height;
 
       if (screen === 'preloader') {
-        // Mode 1: Cosmic Nebula Orbits
-        for (let i = 0; i < maxParticles; i++) {
-          const orbitRadius = Math.random() * Math.min(w, h) * 0.4 + 40;
+        // Mode 1: Cosmic Nebula Orbits & Star Field
+        // 1. Generate twinkling stars for depth
+        const numStars = 80;
+        for (let i = 0; i < numStars; i++) {
+          const radius = Math.random() * 1.2 + 0.3;
+          particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.06,
+            vy: (Math.random() - 0.5) * 0.06,
+            radius,
+            baseRadius: radius,
+            alpha: Math.random() * 0.7 + 0.2,
+            isStar: true,
+            speed: Math.random() * 0.01 + 0.003, // twinkle frequency multiplier
+          });
+        }
+
+        // 2. Generate orbital nodes moving on tilted paths
+        const numOrbits = 35;
+        for (let i = 0; i < numOrbits; i++) {
+          const orbitRadius = Math.random() * Math.min(w, h) * 0.38 + 50;
           particles.push({
             x: w / 2,
             y: h / 2,
             vx: 0,
             vy: 0,
-            radius: Math.random() * 2 + 1,
-            baseRadius: Math.random() * 2 + 1,
-            alpha: Math.random() * 0.5 + 0.3,
+            radius: Math.random() * 2.2 + 1,
+            baseRadius: Math.random() * 2.2 + 1,
+            alpha: Math.random() * 0.6 + 0.4,
             angle: Math.random() * Math.PI * 2,
-            speed: (Math.random() * 0.002 + 0.0005) * (Math.random() > 0.5 ? 1 : -1),
+            speed: (Math.random() * 0.002 + 0.0006) * (Math.random() > 0.5 ? 1 : -1),
             orbitRadius,
+            orbitTilt: (Math.random() - 0.5) * Math.PI * 0.3, // Tilt angle of orbit
+            orbitRatio: 0.3 + Math.random() * 0.2, // Y-to-X ratio for 3D perspective
+            isStar: false
           });
         }
       } else if (screen === 'signin') {
@@ -152,28 +177,93 @@ export const Background3D: React.FC<Background3DProps> = ({ screen }) => {
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
 
       if (screen === 'preloader') {
-        // Draw Preloader: Slow concentric orbits & nebula
+        // Draw Preloader: Slow 3D concentric orbits & star nebula
         const cx = w / 2;
         const cy = h / 2;
 
-        // Draw faint concentric background orbit lines
+        // 1. Draw twinkling background stars
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          if (p.isStar) {
+            // Update drifting star position
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = w;
+            if (p.x > w) p.x = 0;
+            if (p.y < 0) p.y = h;
+            if (p.y > h) p.y = 0;
+
+            // twinkle alpha calculation
+            const currentAlpha = Math.abs(Math.sin(Date.now() * (p.speed || 0.002) + p.x)) * (p.alpha || 0.5);
+
+            ctx.fillStyle = isDark
+              ? `rgba(255, 255, 255, ${currentAlpha * 0.85})`
+              : `rgba(100, 116, 139, ${currentAlpha * 0.5})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        // 2. Draw faint 3D elliptical background orbit lines
         ctx.lineWidth = 0.5;
-        const maxOrbits = 5;
+        const maxOrbits = 6;
         for (let o = 1; o <= maxOrbits; o++) {
-          const r = Math.min(w, h) * 0.08 * o + 20;
-          ctx.strokeStyle = isDark ? `rgba(139, 92, 246, 0.04)` : `rgba(124, 58, 237, 0.03)`;
+          const r = Math.min(w, h) * 0.07 * o + 30;
+          // Apply a rotating orbital tilt perspective in 3D
+          const tilt = (o - 3.5) * 0.15;
+          const ratio = 0.32 + o * 0.03;
+          ctx.strokeStyle = isDark ? `rgba(139, 92, 246, 0.05)` : `rgba(124, 58, 237, 0.04)`;
           ctx.beginPath();
-          ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          if (ctx.ellipse) {
+            ctx.ellipse(cx, cy, r, r * ratio, tilt, 0, Math.PI * 2);
+          } else {
+            // fallback if browser doesn't support ellipse
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+          }
           ctx.stroke();
         }
 
-        // Draw and update orbit particles
+        // 3. Draw connection lines between nearby orbital nodes (orbital plexus network)
+        for (let i = 0; i < particles.length; i++) {
+          const p1 = particles[i];
+          if (p1.isStar || p1.isStar === undefined) continue;
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            if (p2.isStar || p2.isStar === undefined) continue;
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 90) {
+              const linkAlpha = (1 - dist / 90) * 0.12 * Math.min(p1.alpha, p2.alpha);
+              ctx.strokeStyle = isDark ? `rgba(139, 92, 246, ${linkAlpha})` : `rgba(124, 58, 237, ${linkAlpha})`;
+              ctx.lineWidth = 0.4;
+              ctx.beginPath();
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        // 4. Draw and update orbit particles
         for (let i = 0; i < particles.length; i++) {
           const p = particles[i];
-          if (p.angle !== undefined && p.speed !== undefined && p.orbitRadius !== undefined) {
+          if (!p.isStar && p.angle !== undefined && p.speed !== undefined && p.orbitRadius !== undefined) {
             p.angle += p.speed;
-            p.x = cx + Math.cos(p.angle) * p.orbitRadius;
-            p.y = cy + Math.sin(p.angle) * p.orbitRadius;
+            
+            // 3D Elliptical orbit projection
+            const tilt = p.orbitTilt || 0;
+            const ratio = p.orbitRatio || 0.4;
+            const rX = p.orbitRadius;
+            const rY = rX * ratio;
+            const cosT = Math.cos(tilt);
+            const sinT = Math.sin(tilt);
+            const cosA = Math.cos(p.angle);
+            const sinA = Math.sin(p.angle);
+
+            p.x = cx + rX * cosA * cosT - rY * sinA * sinT;
+            p.y = cy + rX * cosA * sinT + rY * sinA * cosT;
 
             // Draw glowing node
             ctx.fillStyle = isDark
@@ -183,11 +273,11 @@ export const Background3D: React.FC<Background3DProps> = ({ screen }) => {
             ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
             ctx.fill();
 
-            // Intermittent glow tails
+            // Intermittent glow ray lines connecting to core center
             if (p.alpha > 0.5) {
               ctx.strokeStyle = isDark
-                ? `rgba(6, 182, 212, ${p.alpha * 0.15})`
-                : `rgba(8, 145, 178, ${p.alpha * 0.1})`;
+                ? `rgba(6, 182, 212, ${p.alpha * 0.12})`
+                : `rgba(8, 145, 178, ${p.alpha * 0.08})`;
               ctx.beginPath();
               ctx.moveTo(cx, cy);
               ctx.lineTo(p.x, p.y);
