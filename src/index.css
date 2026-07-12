@@ -834,5 +834,7 @@ button, a, select, input, textarea, .cursor-pointer {
 .border-0 { border-width: 0 !important; }
 .outline-none { outline: none !important; }
 .cursor-pointer { cursor: pointer !important; }
+.hidden { display: none !important; }
+.opacity-0 { opacity: 0 !important; }
 
 
