@@ -186,7 +186,7 @@ export const EmailStudio: React.FC = () => {
 
             <div className="flex gap-2 items-center bg-orange-950/10 border border-orange-500/20 p-2.5 rounded text-[10px] font-mono text-orange-300">
               <Sparkles size={14} className="flex-shrink-0" />
-              <span>AI READ TIME: ~25s. Open score: 94%.</span>
+              <span>AI READ TIME: Est. 25s. Open score: 94%.</span>
             </div>
           </div>
         </div>

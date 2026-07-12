@@ -255,7 +255,7 @@ export const TaskManager: React.FC = () => {
                               const prevCol = steps[steps.indexOf(col.id) - 1];
                               moveTask(t.id, prevCol);
                             }}
-                            className="text-[9px] font-mono text-slate-500 hover:text-slate-300"
+                            className="text-[9px] font-mono text-slate-500 hover:text-slate-300 bg-transparent border-0 outline-none cursor-pointer"
                           >
                             &lt; Prev
                           </button>
@@ -269,7 +269,7 @@ export const TaskManager: React.FC = () => {
                               const nextCol = steps[steps.indexOf(col.id) + 1];
                               moveTask(t.id, nextCol);
                             }}
-                            className="text-[9px] font-mono text-purple-400 hover:text-purple-300 ml-auto"
+                            className="text-[9px] font-mono text-purple-400 hover:text-purple-300 ml-auto bg-transparent border-0 outline-none cursor-pointer"
                           >
                             Next &gt;
                           </button>
