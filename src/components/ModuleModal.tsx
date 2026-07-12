@@ -10,17 +10,31 @@ import { WorkflowBuilder } from './modules/WorkflowBuilder';
 import { Analytics } from './modules/Analytics';
 import { SmartNotes } from './modules/SmartNotes';
 import { AutomationCenter } from './modules/AutomationCenter';
+import { AIDesignStudio } from './modules/AIDesignStudio';
 
 interface ModuleModalProps {
   moduleId: string | null;
   moduleName: string;
   onClose: () => void;
+  user?: {
+    name: string;
+    email: string;
+    picture: string;
+  };
+  setUser?: React.Dispatch<React.SetStateAction<{
+    name: string;
+    email: string;
+    picture: string;
+  }>>;
 }
 
-export const ModuleModal: React.FC<ModuleModalProps> = ({ moduleId, moduleName, onClose }) => {
+export const ModuleModal: React.FC<ModuleModalProps> = ({ moduleId, moduleName, onClose, user, setUser }) => {
   if (!moduleId) return null;
 
   const renderContent = () => {
+    const mockUser = user || { name: 'Admin', email: 'admin@flowzint.in', picture: '' };
+    const mockSetUser = setUser || (() => {});
+
     switch (moduleId) {
       case '1': return <AIAssistant />;
       case '2': return <TaskManager />;
@@ -31,7 +45,8 @@ export const ModuleModal: React.FC<ModuleModalProps> = ({ moduleId, moduleName, 
       case '7': return <WorkflowBuilder />;
       case '8': return <Analytics />;
       case '9': return <SmartNotes />;
-      case '10': return <AutomationCenter />;
+      case '10': return <AutomationCenter user={mockUser} setUser={mockSetUser} />;
+      case '11': return <AIDesignStudio />;
       default:
         return <div className="text-center py-10 font-mono text-slate-500">Module workspace loading...</div>;
     }
@@ -48,6 +63,7 @@ export const ModuleModal: React.FC<ModuleModalProps> = ({ moduleId, moduleName, 
     '8': 'border-cyan-500/30 shadow-cyan-500/10',
     '9': 'border-pink-500/30 shadow-pink-500/10',
     '10': 'border-red-500/30 shadow-red-500/10',
+    '11': 'border-fuchsia-500/30 shadow-fuchsia-500/10',
   };
 
   const activeBorder = themeColorMap[moduleId] || 'border-purple-500/30';

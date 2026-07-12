@@ -9,16 +9,25 @@ type ScreenState = 'preloader' | 'signin' | 'dashboard';
 
 export const App: React.FC = () => {
   const [screen, setScreen] = useState<ScreenState>('preloader');
+  const [user, setUser] = useState({
+    name: 'Admin',
+    picture: '',
+    email: 'admin@flowzint.in'
+  });
 
   const handlePreloaderComplete = () => {
     setScreen('signin');
   };
 
-  const handleSignInSuccess = () => {
+  const handleSignInSuccess = (profile?: { name: string; email: string; picture: string }) => {
+    if (profile) {
+      setUser(profile);
+    }
     setScreen('dashboard');
   };
 
   const handleSignOut = () => {
+    setUser({ name: 'Admin', picture: '', email: 'admin@flowzint.in' });
     setScreen('signin');
   };
 
@@ -40,7 +49,7 @@ export const App: React.FC = () => {
       )}
 
       {screen === 'dashboard' && (
-        <Dashboard onSignOut={handleSignOut} />
+        <Dashboard onSignOut={handleSignOut} user={user} setUser={setUser} />
       )}
     </>
   );

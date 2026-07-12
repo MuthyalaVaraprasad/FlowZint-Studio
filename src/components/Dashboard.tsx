@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Compass, Sparkles, Calendar, FileText, Mail, Target, Layers, 
   BarChart3, BookOpen, Settings, LogOut, Sun, Moon, Bell, Search, 
-  CheckSquare, Clock, Code, Menu, Trophy
+  CheckSquare, Clock, Code, Menu, Palette
 } from 'lucide-react';
 
 // Inline import of sub-modules
@@ -16,11 +16,21 @@ import { WorkflowBuilder } from './modules/WorkflowBuilder';
 import { Analytics } from './modules/Analytics';
 import { SmartNotes } from './modules/SmartNotes';
 import { AutomationCenter } from './modules/AutomationCenter';
-import { HackathonHub } from './modules/HackathonHub';
+import { AIDesignStudio } from './modules/AIDesignStudio';
 import { PortfolioModal } from './PortfolioModal';
 
 interface DashboardProps {
   onSignOut: () => void;
+  user: {
+    name: string;
+    email: string;
+    picture: string;
+  };
+  setUser: React.Dispatch<React.SetStateAction<{
+    name: string;
+    email: string;
+    picture: string;
+  }>>;
 }
 
 interface ModuleInfo {
@@ -31,7 +41,7 @@ interface ModuleInfo {
   icon: React.ReactNode;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ onSignOut }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ onSignOut, user, setUser }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [searchQuery, setSearchQuery] = useState('');
@@ -277,6 +287,26 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSignOut }) => {
         'Auto-Cleanup Temp File Broker', 'Webhooks Response Endpoint Node', 'Throttling Load Balancer Node',
         'Docker Node Deploy Orchestration', 'Backup Restores Verification Suite', 'Server Node Diagnostic Report'
       ]
+    },
+    {
+      id: '11',
+      name: 'AI Design Studio',
+      theme: 'border-fuchsia-500/30 text-fuchsia-400 bg-fuchsia-950/5',
+      icon: <Palette size={16} />,
+      features: [
+        'AI Layout Generator', 'CSS Glassmorphism Compiler', 'Palette Theme Recommender', 'SVG Asset Optimizer',
+        'Tailwind Utility Class Parser', 'Figma Design Token Converter', 'Auto Image Crop & Resize', 'CSS Animation Spline Builder',
+        'Font Pairings Suggester', 'Accessibility Color Contrast Audit', 'Dark Mode Palette Adaptor', 'Dynamic UI Preview Box',
+        'Vector Node SVG Drawer', 'Micro-interaction Speed Tuner', 'Real-time CSS code Copier', 'Flexbox Grid Auto-adjuster',
+        'Satin Gloss Layer Optimizer', 'Neo-Brutalism Shadow Generator', 'Background Radial Blur Config', 'Custom Border Outline Maker',
+        'Icon Set SVG Bundle Builder', 'UI Screenshot PDF Exporter', 'Design Version History Log', 'AI Wireframe Sketch Scanner',
+        'Aurora Glow Matrix Editor', 'Fluid Typography REM Scaler', 'CSS Variables Index Generator', 'Component Boilerplate Exporter',
+        'Device Screen Ratio Previewer', 'SVG Path Curve Editor', 'Gradient Stop Position Mixer', 'Button Hover Effect Customizer',
+        'Input Form State Style Designer', 'Table Data Styled Grid Config', 'Modal Backdrop Blur Controller', 'Scrollbar Custom CSS Styler',
+        'Loading Skeleton Generator', 'AI Logo Concept Sketcher', 'Avatar Image Silhouette Clipper', 'Header Navigation Layout Builder',
+        'Sidebar Flex Menu Architect', 'Card Shadow Offset Configurator', 'Visual Design Asset Catalog', 'Code Sandbox Live Preview Link',
+        'Framer Motion Keyframe Helper'
+      ]
     }
   ];
 
@@ -288,7 +318,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSignOut }) => {
 
   const renderActiveWorkspace = () => {
     switch (activeTab) {
-      case 'hackathon': return <HackathonHub />;
       case 'AI Assistant': return <AIAssistant />;
       case 'Task Management': return <TaskManager />;
       case 'AI Document Hub': return <DocumentHub />;
@@ -298,7 +327,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSignOut }) => {
       case 'AI Workflow Builder': return <WorkflowBuilder />;
       case 'Analytics Dashboard': return <Analytics />;
       case 'Smart Notes': return <SmartNotes />;
-      case 'Automation Center': return <AutomationCenter />;
+      case 'Automation Center': return <AutomationCenter user={user} setUser={setUser} />;
+      case 'AI Design Studio': return <AIDesignStudio />;
       default: return null;
     }
   };
@@ -328,13 +358,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSignOut }) => {
             <Compass size={14} className="sidebar-nav-icon" /> <span className="sidebar-nav-label">Overview</span>
           </button>
 
-          <button 
-            onClick={() => selectTab('hackathon')}
-            className={`sidebar-nav-btn ${activeTab === 'hackathon' ? 'active' : ''}`}
-          >
-            <Trophy size={14} className="sidebar-nav-icon text-yellow-500" /> <span className="sidebar-nav-label">Hackathon Hub</span>
-          </button>
-          
           {modules.map((m) => (
             <button
               key={m.id}
@@ -411,10 +434,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSignOut }) => {
 
           {/* Action Icons */}
           <div className="flex items-center gap-2 md:gap-3">
-            {/* Hackathon Badge */}
-            <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-purple-500/30 bg-purple-950/15 text-[10px] font-mono font-bold text-purple-300 animate-pulse">
-              <Trophy size={11} className="text-yellow-400" />
-              <span>AI Entry: Open Innovation</span>
+            {/* Workspace Status Badge */}
+            <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/15 text-[10px] font-mono font-bold text-emerald-300">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+              <span>All Neural Nodes: Active</span>
             </div>
 
             <button 
@@ -448,15 +471,26 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSignOut }) => {
               )}
             </div>
 
-            {/* Admin Profile link */}
+            {/* User Profile link */}
             <div 
               onClick={() => setPortfolioOpen(true)}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-purple-500/20 bg-purple-950/10 hover:border-purple-500/50 cursor-pointer transition-all active:scale-95"
             >
-              <div className="w-6 h-6 rounded-full bg-slate-800 text-purple-400 flex items-center justify-center font-mono text-xs font-bold">
-                AD
-              </div>
-              <span className="text-xs font-semibold text-white font-mono hidden md:inline">Admin</span>
+              {user.picture ? (
+                <img 
+                  src={user.picture} 
+                  alt="Profile" 
+                  className="w-6 h-6 rounded-full object-cover border border-purple-500/30"
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                <div className="w-6 h-6 rounded-full bg-slate-800 text-purple-400 flex items-center justify-center font-mono text-xs font-bold">
+                  {user.name ? user.name.substring(0, 2).toUpperCase() : 'AD'}
+                </div>
+              )}
+              <span className="text-xs font-semibold text-white font-mono hidden md:inline">
+                {user.name || 'Admin'}
+              </span>
             </div>
           </div>
         </header>
@@ -469,10 +503,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSignOut }) => {
               <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <div className="flex items-center gap-2.5">
                   <span className="p-1.5 rounded bg-purple-950/20 text-purple-400 border border-purple-500/20">
-                    {activeTab === 'hackathon' ? <Trophy size={16} className="text-yellow-500" /> : (selectedModule?.icon || <Sparkles size={16} />)}
+                    {selectedModule?.icon || <Sparkles size={16} />}
                   </span>
-                  <h2 className="text-xl font-bold text-white font-mono uppercase tracking-wider">
-                    {activeTab === 'hackathon' ? 'Hackathon Hub' : `${activeTab} Workspace`}
+                  <h2 className="text-xl font-bold text-white font-mono uppercase tracking-wider text-left">
+                    {activeTab} Workspace
                   </h2>
                 </div>
                 <button

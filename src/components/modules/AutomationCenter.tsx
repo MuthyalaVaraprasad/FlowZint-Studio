@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, Cpu, Database, Sparkles, Activity } from 'lucide-react';
+import { Settings, Cpu, Database, Sparkles, Activity, User, Upload } from 'lucide-react';
 
 interface BackupRule {
   id: string;
@@ -7,6 +7,19 @@ interface BackupRule {
   schedule: string;
   target: string;
   status: 'active' | 'paused';
+}
+
+interface AutomationCenterProps {
+  user: {
+    name: string;
+    email: string;
+    picture: string;
+  };
+  setUser: React.Dispatch<React.SetStateAction<{
+    name: string;
+    email: string;
+    picture: string;
+  }>>;
 }
 
 const features = [
@@ -20,7 +33,7 @@ const features = [
   "Docker Node Sync Alert", "Encryption Key Rotator"
 ];
 
-export const AutomationCenter: React.FC = () => {
+export const AutomationCenter: React.FC<AutomationCenterProps> = ({ user, setUser }) => {
   const [rules, setRules] = useState<BackupRule[]>([
     { id: '1', name: 'Database Cloud Sync', schedule: 'Every 5 mins', target: 'MongoDB Cluster A', status: 'active' },
     { id: '2', name: 'File Automation cleanup', schedule: 'Daily at 02:00 AM', target: 'Temporary Uploads Directory', status: 'active' },
@@ -39,6 +52,18 @@ export const AutomationCenter: React.FC = () => {
   const [featureAlert, setFeatureAlert] = useState<string | null>(null);
 
   const [scriptLog, setScriptLog] = useState<string | null>(null);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setUser(prev => ({ ...prev, picture: reader.result as string }));
+      setFeatureAlert("Profile photo updated successfully!");
+      setTimeout(() => setFeatureAlert(null), 3000);
+    };
+    reader.readAsDataURL(file);
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -114,7 +139,7 @@ export const AutomationCenter: React.FC = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Scheduled Automation lists */}
           <div className="glass p-4 border-white/5 bg-slate-900/10 flex flex-col gap-3">
             <div className="flex items-center gap-2 border-b border-white/5 pb-2">
@@ -187,6 +212,49 @@ export const AutomationCenter: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* User Profile Config Card */}
+          <div className="glass p-4 border-white/5 bg-slate-900/10 flex flex-col gap-3">
+            <div className="flex items-center gap-2 border-b border-white/5 pb-2">
+              <User className="text-red-400" size={16} />
+              <span className="font-mono text-xs font-bold text-white uppercase">User Identity Config</span>
+            </div>
+
+            <div className="flex flex-col items-center gap-2 flex-grow justify-center py-1">
+              <div className="relative group cursor-pointer w-12 h-12 rounded-full overflow-hidden border border-purple-500/30 bg-slate-800 flex items-center justify-center">
+                {user.picture ? (
+                  <img src={user.picture} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <span className="font-mono text-sm font-bold text-purple-400">
+                    {user.name ? user.name.substring(0, 2).toUpperCase() : 'AD'}
+                  </span>
+                )}
+                <label className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+                  <Upload size={12} className="text-white" />
+                  <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+                </label>
+              </div>
+
+              <div className="w-full flex flex-col gap-2 font-mono text-[9px]">
+                <div className="flex flex-col gap-0.5 text-left">
+                  <label className="text-slate-400">DisplayName:</label>
+                  <input
+                    type="text"
+                    className="form-input text-[9px] py-1 px-2.5 w-full bg-black/45 border-white/5"
+                    value={user.name}
+                    onChange={e => setUser(prev => ({ ...prev, name: e.target.value }))}
+                  />
+                </div>
+                <div className="flex flex-col gap-0.5 text-left">
+                  <label className="text-slate-400">Email Address:</label>
+                  <span className="p-1 px-2 rounded bg-white/5 text-slate-300 truncate w-full block border border-white/5 select-none">
+                    {user.email || 'guest@flowzint.in'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         {/* Execution Logs Terminal */}
