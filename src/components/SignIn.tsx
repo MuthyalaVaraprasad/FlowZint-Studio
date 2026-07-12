@@ -5,7 +5,7 @@ interface SignInProps {
 }
 
 // REPLACE THIS WITH YOUR GOOGLE CLOUD CONSOLE CLIENT ID
-const CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+const CLIENT_ID = '492928126668-72gkk1tur8godo2nuqn1cvecasv6kpm1.apps.googleusercontent.com';
 
 export const SignIn: React.FC<SignInProps> = ({ onSuccess }) => {
   const [error, setError] = useState(false);
